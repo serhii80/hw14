@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel_hw14</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+        }
+        body {
+            background-color: rgb(30, 30, 30);
+        }
+        .container {
+            background-image: none;
+            margin: 25px auto;
+            width: 500px;
+            height: 300px;
+            overflow: hidden;
+            transition: all .5s ease-in;
+        }
+        .view {
+            position: relative;
+            left: -500px;
+            width: 1000%;
+            transition: all 1s ease-in;
+        }
+        .elem {
+            float: left;
+            width: 500px;
+            height: 300px;
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+        }
+        .buttons {
+            width: 90px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<script>
+    let a = `<div class="elem" style="background-color: chocolate; width: 400px;">1</div>`;
+    let b = `<div class="elem" style="background-color: darkcyan; width: 600px;">2</div>`;
+    let c = `<div class="elem" style="background-color: darkorchid; width: 500px;">3</div>`;
+    let d = `<div class="elem" style="background-color: midnightblue; width: 700px;">4</div>`;
+
+    let f = [d, a, b, c];
+    document.addEventListener("DOMContentLoaded", init);
+
+    function init() {
+        document.querySelector(".view").style.transition = "all 0s ease-in";
+        document.querySelector(".container").style.transition = "all 0s ease-in";
+        document.querySelector(".view").innerHTML = f.join(' ');
+        document.querySelector(".view").style.left = -(document.getElementsByClassName('elem')[0].offsetWidth) + "px";
+        document.querySelector(".container").style.width = (document.getElementsByClassName('elem')[1].offsetWidth) + "px";
+        document.getElementById('leftB').disabled = false;
+        document.getElementById('rightB').disabled = false;
+    }
+
+    function left() {
+        document.getElementById('leftB').disabled = true;
+        f.unshift(f.pop());
+        document.querySelector(".view").style.transition = "all .5s ease-in";
+        document.querySelector(".container").style.transition = "all .5s ease-in";
+        document.querySelector(".view").style.left = 0;
+        document.querySelector(".container").style.width = (document.getElementsByClassName('elem')[0].offsetWidth) + "px";
+        return setTimeout(() => init(), 500);
+    }
+    function right() {
+        document.getElementById('rightB').disabled = true;
+        f.push(f.shift());
+        document.querySelector(".view").style.transition = "all .5s ease-in";
+        document.querySelector(".container").style.transition = "all .5s ease-in";
+        document.querySelector(".view").style.left = -((document.getElementsByClassName('elem')[0].offsetWidth) + (document.getElementsByClassName('elem')[1].offsetWidth)) + "px";
+        document.querySelector(".container").style.width = (document.getElementsByClassName('elem')[2].offsetWidth) + "px";
+        return setTimeout(() => init(), 500);;
+    }
+</script>
+<body>
+    <div class="container">
+        <div class="view"></div>
+    </div>
+    <div class="buttons">
+        <button id="leftB" onclick="left()">Left</button>
+        <button id="rightB" onclick="right()">Right</button>
+    </div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel_hw14</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+        }
+        body {
+            background-color: rgb(30, 30, 30);
+        }
+        .container {
+            background-image: none;
+            margin: 25px auto;
+            width: 500px;
+            height: 300px;
+            overflow: hidden;
+        }
+        .view {
+            position: relative;
+            left: -500px;
+            width: 1000%;
+            transition: left 1s ease-in;
+        }
+        .elem {
+            float: left;
+            width: 500px;
+            height: 300px;
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+        }
+        .buttons {
+            width: 90px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<script>
+    let a = `<div class="elem" style="background-color: chocolate;">1</div>`;
+    let b = `<div class="elem" style="background-color: darkcyan;">2</div>`;
+    let c = `<div class="elem" style="background-color: darkorchid;">3</div>`;
+    let d = `<div class="elem" style="background-color: midnightblue;">4</div>`;
+
+    let f = [d, a, b, c];
+    document.addEventListener("DOMContentLoaded", init);
+
+    function init() {
+        document.querySelector(".view").style.transition = "left 0s ease-in";
+        document.querySelector(".view").innerHTML = f.join(' ');
+        document.querySelector(".view").style.left = -500 + "px";
+        document.getElementById('leftB').disabled = false;
+        document.getElementById('rightB').disabled = false;
+    }
+
+    function left() {
+        document.getElementById('leftB').disabled = true;
+        f.unshift(f.pop());
+        document.querySelector(".view").style.transition = "left .5s ease-in";
+        document.querySelector(".view").style.left = 0;
+        return setTimeout(() => init(), 500);
+    }
+    function right() {
+        document.getElementById('rightB').disabled = true;
+        f.push(f.shift());
+        document.querySelector(".view").style.transition = "left .5s ease-in";
+        document.querySelector(".view").style.left = -1000 + "px";
+        return setTimeout(() => init(), 500);;
+    }
+</script>
+<body>
+    <div class="container">
+        <div class="view"></div>
+    </div>
+    <div class="buttons">
+        <button id="leftB" onclick="left()">Left</button>
+        <button id="rightB" onclick="right()">Right</button>
+    </div>
+</body>
+</html>
